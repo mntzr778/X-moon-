@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>مشتركين تليكرام حقيقيين</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .btn {
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .link-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>مشتركين تليكرام حقيقيين</h2>
+        <p>قم بإدخال بياناتك لإنشاء حساب</p>
+
+        <input type="text" id="channelLink" placeholder="ضع رابط قناتك هنا">
+        <input type="text" id="username" placeholder="اسم المستخدم">
+        <input type="text" id="userCode" placeholder="رمز المستخدم">
+        <button class="btn" onclick="registerUser()">إنشاء حسابك</button>
+        
+        <div class="link-container" id="channelLinkContainer" style="display:none;">
+            <p>يرجى الاشتراك في القناة التالية لتكملة التسجيل:</p>
+            <a href="https://t.me/manlEE2" target="_blank" class="btn">إضغط هنا للاشتراك بالقناة</a>
+            <p>بعد الاشتراك، يمكنك العودة هنا للمتابعة.</p>
+            <label>
+                <input type="checkbox" id="subscriptionConfirm"> 
+                تم الاشتراك في القناة.
+            </label>
+            <button class="btn" onclick="completeRegistration()" id="completeButton" style="display:none;">إتمام التسجيل</button>
+        </div>
+    </div>
+
+    <script>
+        function registerUser() {
+            let channelLink = document.getElementById("channelLink").value;
+            let username = document.getElementById("username").value;
+
+            if (!channelLink || !username) {
+                alert("يرجى إدخال جميع البيانات!");
+                return;
+            }
+
+            localStorage.setItem("userChannel", channelLink);
+            localStorage.setItem("username", username);
+            localStorage.setItem("userPoints", 0);
+
+            let usersData = JSON.parse(localStorage.getItem("usersData")) || [];
+            usersData.push({ username: username, channel: channelLink, points: 0 });
+            localStorage.setItem("usersData", JSON.stringify(usersData));
+
+            // Show channel link section
+            document.getElementById("channelLinkContainer").style.display = "block";
+        }
+
+        // Check if the user has confirmed their subscription
+        document.getElementById("subscriptionConfirm").addEventListener("change", function() {
+            let completeButton = document.getElementById("completeButton");
+            if (this.checked) {
+                completeButton.style.display = "block"; // Show the complete registration button
+            } else {
+                completeButton.style.display = "none"; // Hide the complete registration button
+            }
+        });
+
+        function completeRegistration() {
+            alert("تم الاشتراك في القناة بنجاح! سيتم توجيهك للصفحة التالية.");
+            window.location.href = "dashboard.html";
+        }
+    </script>
+
+</body>
+</html>
